@@ -8,4 +8,4 @@ import "./index.scss";
 import 'react-toastify/dist/ReactToastify.css';
 
 // Render the App component into the DOM
-render(<App />, document.querySelector("#wpstorm-sms-admin-page"));
+render(<App />, document.querySelector("#wpstorm-notify-admin-page"));

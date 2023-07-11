@@ -123,7 +123,7 @@ class Wpstorm_Notify_Settings
          * */
         wp_localize_script(
             'wpstorm-notify-script',
-            'wpstormSmsJsObject',
+            'wpstormNotifyJsObject',
             [
                 'rootapiurl'        => esc_url_raw(rest_url()),
                 'nonce'             => wp_create_nonce('wp_rest'),

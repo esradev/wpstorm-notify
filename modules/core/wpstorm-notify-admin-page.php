@@ -1,5 +1,5 @@
-<!-- The file is required for rendering wpstorm-sms Settings page powered by React. -->
-<div id="wpstorm-sms-admin-page">
+<!-- The file is required for rendering wpstorm-notify Settings page powered by React. -->
+<div id="wpstorm-notify-admin-page">
     <h2>Loading...</h2>
 </div>
-<div id="wpstorm-sms-portal"></div>
+<div id="wpstorm-notify-portal"></div>

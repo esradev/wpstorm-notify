@@ -1,0 +1,51 @@
+@import "./variables.scss";
+
+/* ===== Sidebar ===== */
+
+main {
+  width: 100%;
+  padding: 1.5rem 2.5rem;
+  gap: o;
+  margin: 0 2.5rem;
+  background-color: $c-background-primary;
+  border-radius: 0.5rem;
+}
+
+.wpstorm-notify-sidebar {
+  display: flex;
+  padding-left: 0;
+  padding-right: 0;
+  .link {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background-color: transparent;
+    text-decoration: none;
+    font-weight: 500;
+    gap: 15px;
+    color: $c-text-action;
+    transition: all 0.3s ease-in-out;
+    border-radius: 0.5rem;
+
+    &:hover {
+      color: $c-text-primary;
+      background-color: $c-background-secondary;
+    }
+    &.active {
+      color: $c-background-primary;
+      background-color: $c-background-blue;
+    }
+
+    & + * {
+      margin-top: 0.5rem;
+    }
+
+    .icon {
+      font-size: 1.25rem;
+    }
+
+    .link_text {
+      font-size: 16px;
+    }
+  }
+}

@@ -4,7 +4,7 @@
   let tracking_code = $("#tracking_code");
   let post_service_provider = $("#post_service_provider");
   let post_service_custom = $("#custom_provider");
-  let post_date = $("#wpstorm-sms-tracking-date-field-value");
+  let post_date = $("#wpstorm-notify-tracking-date-field-value");
   let send_tracking_code_response = $("#send_tracking_code_response");
   let tracking_code_order_id = $("#tracking-code-order_id");
 

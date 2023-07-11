@@ -1,0 +1,123 @@
+@import "./variables.scss";
+
+/* ===== Style all forms in setting pages ===== */
+.form-group {
+  font-family: IRANSans, serif;
+  position: relative;
+  margin-bottom: 20px;
+
+  input[type="textarea"] {
+    padding: 1rem;
+    font-size: 1.2rem;
+    line-height: 1.75;
+    color: #292929;
+  }
+
+  input[type="text"] {
+    position: relative;
+    padding: 1rem;
+    text-decoration: none;
+    display: inline-flex;
+    border-radius: 8px;
+    border: 1px solid $c-border-primary;
+    color: $c-text-primary;
+    font-size: 0.875rem;
+    transition: 0.15s ease;
+    width: 100%;
+    line-height: 1;
+    margin-top: 10px;
+
+    &::placeholder {
+      color: $c-text-secondary;
+    }
+
+    &:focus::placeholder {
+      color: transparent;
+    }
+
+    &:focus,
+    &:hover {
+      border-color: $c-accent-primary;
+    }
+  }
+
+  .form-control {
+    width: 100%;
+  }
+
+  .form-control-label {
+    width: 100%;
+  }
+}
+
+.form-control-label {
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.toggle-control {
+  display: block;
+  position: relative;
+  margin-bottom: 12px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.toggle-control input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.toggle-control input:checked ~ .control {
+  background-color: $c-accent-primary;
+}
+
+.toggle-control input:checked ~ .control:after {
+  left: 2px;
+}
+
+.toggle-control .control {
+  position: absolute;
+  height: 20px;
+  width: 40px;
+  margin: 0 20px;
+  border-radius: 10px;
+  background-color: $c-text-secondary;
+  transition: background-color 0.15s ease-in;
+}
+
+.toggle-control .control:after {
+  content: "";
+  position: absolute;
+  left: 22px;
+  top: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 10px;
+  background: white;
+  transition: left 0.15s ease-in;
+}
+
+#settings-form {
+  .cancel_submit_action {
+    background-color: #dc3545;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 10px;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+}

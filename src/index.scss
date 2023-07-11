@@ -1,0 +1,88 @@
+@use "~bootstrap/scss/bootstrap";
+@use "./styles/variables.scss";
+@use "./styles/header.scss";
+@use "./styles/sidebar.scss";
+@use "./styles/flash-messages.scss";
+@use "./styles/settings.scss";
+@use "./styles/live-validate-message.scss";
+@use "./styles/plugins-card-checkbox.scss";
+@use "./styles/loading-spinner.scss";
+@use "./styles/newsletter.scss";
+
+@use "./styles/section-error.scss";
+@use "./styles/portal-overlay.scss";
+
+@font-face {
+  font-family: IRANSans;
+  font-style: normal;
+  font-weight: normal;
+  src: url("./assets/fonts/IRANSansWeb.woff") format("woff");
+}
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --app-container: #f3f6fd;
+  --main-color: #111827;
+}
+
+.dark:root {
+  --app-container: #111827;
+  --main-color: #fff;
+}
+
+html, body {
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+}
+
+body {
+  font-family: IRANSans, Tahoma, sans-serif;
+  background-color: var(--app-container);
+}
+
+button, a {
+  cursor: pointer;
+}
+
+.projects-section {
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    color: var(--main-color);
+
+    p {
+      font-size: 24px;
+      line-height: 32px;
+      font-weight: 700;
+      opacity: .9;
+      margin: 0;
+      color: var(--main-color);
+    }
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .projects-section { overflow: auto; }
+  .project-boxes { overflow-y: visible; }
+
+  .app-sidebar, .app-icon { display: none; }
+
+  .app-header {
+    padding: 16px 10px;
+  }
+
+  .search-input {
+    max-width: 120px;
+    font-size: 14px;
+  }
+
+  .projects-section-header p {
+    font-size: 18px;
+  }
+}

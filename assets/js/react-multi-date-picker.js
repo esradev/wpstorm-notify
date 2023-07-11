@@ -5089,12 +5089,12 @@
           {
             onDateChange: function (e) {
               document.getElementById(
-                "wpstorm-sms-tracking-date-field-value"
+                "wpstorm-notify-tracking-date-field-value"
               ).value = e;
             },
           }
         ),
-        document.querySelector("#wpstorm-sms-post-persian-date")
+        document.querySelector("#wpstorm-notify-post-persian-date")
       );
     })();
 })();

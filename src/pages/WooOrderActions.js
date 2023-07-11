@@ -1,0 +1,1035 @@
+/**
+ * Import remote dependencies.
+ */
+import React, { useState, useEffect, useContext } from "react";
+import { useImmerReducer } from "use-immer";
+import useConfirm from "../hooks/useConfirm";
+
+import { __ } from "@wordpress/i18n";
+
+/**
+ * Import local dependencies
+ */
+import AxiosWp from "../function/AxiosWp";
+import DispatchContext from "../DispatchContext";
+import SettingsForm from "../views/SettingsForm";
+import SectionHeader from "../views/SectionHeader";
+import SectionError from "../views/SectionError";
+import LoadingSpinner from "../views/LoadingSpinner";
+
+function WooOrderActions(props) {
+  const [selectedActions, setSelectedActions] = useState([]);
+  const isDeleteDisabled = selectedActions.length === 0;
+  const appDispatch = useContext(DispatchContext);
+  // Init States
+  const originalState = {
+    inputs: {
+      title: {
+        value: "",
+        onChange: "titleChange",
+        name: "title",
+        type: "text",
+        label: __("Title:", "wpstorm-notify"),
+      },
+      order_type: {
+        value: [],
+        onChange: "order_typeChange",
+        name: "order_type",
+        type: "select",
+        label: __("Orders type:", "wpstorm-notify"),
+        infoTitle: __("Info", "wpstorm-notify"),
+        infoBody: __(
+          "In this section, you can specify what type of orders you want to use the following actions.",
+          "wpstorm-notify"
+        ),
+        options: [
+          {
+            value: "all_orders",
+            label: __("All orders", "wpstorm-notify"),
+          },
+          {
+            value: "orders_more_than",
+            label: __("Orders more than:", "wpstorm-notify"),
+          },
+          {
+            value: "orders_less_than",
+            label: __("Orders less than:", "wpstorm-notify"),
+          },
+          {
+            value: "x_orders",
+            label: __("X orders", "wpstorm-notify"),
+          },
+          {
+            value: "only_include",
+            label: __(
+              "The order should only include the selected product(s)",
+              "wpstorm-notify"
+            ),
+          },
+          {
+            value: "include",
+            label: __(
+              "The order includes the selected product(s) and can contain other products.",
+              "wpstorm-notify"
+            ),
+          },
+          {
+            value: "not_include",
+            label: __(
+              "The order does not include any of the selected product(s)",
+              "wpstorm-notify"
+            ),
+          },
+        ],
+      },
+      minimum_order_total: {
+        value: "",
+        onChange: "minimum_order_totalChange",
+        name: "minimum_order_total",
+        type: "text",
+        label: __("Minimum order total:", "wpstorm-notify"),
+        infoTitle: __("Info", "wpstorm-notify"),
+        infoBody: __(
+          "Specify the Minimum order total, that you want to do action on orders those more that this price. example: 100000 (the price should be a number on toman)",
+          "wpstorm-notify"
+        ),
+        isDependencyUsed: false,
+      },
+      maximum_order_total: {
+        value: "",
+        onChange: "maximum_order_totalChange",
+        name: "maximum_order_total",
+        type: "text",
+        label: __("Maximum order total:", "wpstorm-notify"),
+        infoTitle: __("Info", "wpstorm-notify"),
+        infoBody: __(
+          "Specify the Maximum order total, that you want to do action on orders those less than this price. example: 200000 (the price should be a number on toman)",
+          "wpstorm-notify"
+        ),
+        isDependencyUsed: false,
+      },
+      order_turn: {
+        value: "",
+        onChange: "order_turnChange",
+        name: "order_turn",
+        type: "text",
+        label: __("Order turn:", "wpstorm-notify"),
+        isDependencyUsed: false,
+      },
+      included_products: {
+        value: [],
+        onChange: "included_productsChange",
+        name: "included_products",
+        type: "select",
+        label: __("Included Products:", "wpstorm-notify"),
+        infoTitle: __("Info", "wpstorm-notify"),
+        infoBody: __(
+          "In this section, you must specify Included Products, that you want to do the action on any order that has them.",
+          "wpstorm-notify"
+        ),
+        option: [],
+        isDependencyUsed: false,
+        isMulti: "isMulti",
+      },
+      only_included_products: {
+        value: [],
+        onChange: "only_included_productsChange",
+        name: "only_included_products",
+        type: "select",
+        label: __("Only Included Products:", "wpstorm-notify"),
+        infoTitle: __("Info", "wpstorm-notify"),
+        infoBody: __(
+          "In this section, you must specify Included Products, that you want to do the action on any order that only has them.",
+          "wpstorm-notify"
+        ),
+        option: [],
+        isDependencyUsed: false,
+        isMulti: "isMulti",
+      },
+      excluded_products: {
+        value: [],
+        onChange: "excluded_productsChange",
+        name: "excluded_products",
+        type: "select",
+        label: __("Excluded products:", "wpstorm-notify"),
+        infoTitle: __("Info", "wpstorm-notify"),
+        infoBody: __(
+          "In this section, you must specify Excluded products, that you don't want to do the action on any order that has them.",
+          "wpstorm-notify"
+        ),
+        option: [],
+        isDependencyUsed: false,
+        isMulti: "isMulti",
+      },
+      order_status: {
+        value: [],
+        onChange: "order_statusChange",
+        name: "order_status",
+        type: "select",
+        label: __("Orders status:", "wpstorm-notify"),
+        infoTitle: __("Info", "wpstorm-notify"),
+        infoBody: __(
+          "In this section, you must specify the order status, that you want to do the action on it.",
+          "wpstorm-notify"
+        ),
+        options: [
+          {
+            value: "pending",
+            label: __("Pending", "wpstorm-notify"),
+          },
+          {
+            value: "failed",
+            label: __("Failed", "wpstorm-notify"),
+          },
+          {
+            value: "processing",
+            label: __("Processing", "wpstorm-notify"),
+          },
+          {
+            value: "completed",
+            label: __("Completed", "wpstorm-notify"),
+          },
+          {
+            value: "on-hold",
+            label: __("On-Hold", "wpstorm-notify"),
+          },
+          {
+            value: "cancelled",
+            label: __("Cancelled", "wpstorm-notify"),
+          },
+          {
+            value: "refunded",
+            label: __("Refunded", "wpstorm-notify"),
+          },
+        ],
+      },
+      action: {
+        value: [],
+        onChange: "actionChange",
+        name: "action",
+        type: "select",
+        label: __("Action type:", "wpstorm-notify"),
+        infoTitle: __("Info", "wpstorm-notify"),
+        infoBody: __(
+          "In this section, you must specify the action type, that you want to do with selected orders.",
+          "wpstorm-notify"
+        ),
+        options: [
+          {
+            value: "save_customer_mobile_to_phonebook",
+            label: __("Save customer mobile to phonebook", "wpstorm-notify"),
+          },
+          {
+            value: "send_sms_to_admin",
+            label: __("Send SMS to admin", "wpstorm-notify"),
+          },
+          {
+            value: "send_sms_to_customer",
+            label: __("Send SMS to customer", "wpstorm-notify"),
+          },
+        ],
+      },
+      mobile_meta_key: {
+        value: "",
+        onChange: "mobile_meta_keyChange",
+        name: "mobile_meta_key",
+        type: "select",
+        label: __("Select meta key for customer mobile.", "wpstorm-notify"),
+        options: [],
+        isDependencyUsed: false,
+      },
+      woo_order_phonebook: {
+        value: [],
+        onChange: "woo_order_phonebookChange",
+        name: "woo_order_phonebook",
+        type: "select_phonebook",
+        label: __(
+          "Select phonebook for Woocommerce order save to phonebook action:",
+          "wpstorm-notify"
+        ),
+        options: [],
+        noOptionsMessage: __("No options is available", "wpstorm-notify"),
+        isDependencyUsed: false,
+      },
+      action_time: {
+        value: [],
+        onChange: "action_timeChange",
+        name: "action_time",
+        type: "select",
+        label: __("Action time:", "wpstorm-notify"),
+        infoTitle: __("Info", "wpstorm-notify"),
+        infoBody: __(
+          "In this section, you must specify the action time, that you want to run the action.",
+          "wpstorm-notify"
+        ),
+        options: [
+          {
+            value: "immediately",
+            label: __("Immediately after order status change.", "wpstorm-notify"),
+          },
+          {
+            value: "timed",
+            label: __(
+              "Timed, X days after order status change.",
+              "wpstorm-notify"
+            ),
+          },
+        ],
+        isDependencyUsed: false,
+      },
+      time: {
+        value: "",
+        onChange: "timeChange",
+        name: "time",
+        type: "text",
+        label: __("Action time:", "wpstorm-notify"),
+        isDependencyUsed: false,
+        infoTitle: __("Info:", "wpstorm-notify"),
+        infoBody: __(
+          "Specify X days the action run after order status change. (Enter number of days.)",
+          "wpstorm-notify"
+        ),
+      },
+      sms_pattern: {
+        value: "",
+        onChange: "sms_patternChange",
+        name: "sms_pattern",
+        type: "text",
+        label: __("SMS Pattern:", "wpstorm-notify"),
+        isDependencyUsed: false,
+        infoTitle: __("Usable variables:", "wpstorm-notify"),
+        infoBody: __(
+          "%customer_name% | %order_id% | %total_price%",
+          "wpstorm-notify"
+        ),
+      },
+      sms_message: {
+        value: "",
+        onChange: "sms_messageChange",
+        name: "sms_message",
+        type: "textarea",
+        label: __("SMS Message:", "wpstorm-notify"),
+        isDependencyUsed: false,
+        infoTitle: __("Usable variables:", "wpstorm-notify"),
+        infoBody: __(
+          "%customer_name% | %order_id% | %total_price%",
+          "wpstorm-notify"
+        ),
+      },
+    },
+    wooOrderActions: "",
+    currentWooOrderActions: 0,
+    checkAction: false,
+    isFetching: false,
+    isSaving: false,
+    editAction: false,
+    edited_action_id: 0,
+    sendCount: 0,
+    sectionName: __("WooCommerce Order SMS", "wpstorm-notify"),
+  };
+
+  function ourReduser(draft, action) {
+    switch (action.type) {
+      case "fetchComplete":
+        draft.isFetching = false;
+        return;
+      case "titleChange":
+        draft.inputs.title.value = action.value;
+        return;
+      case "order_typeChange":
+        draft.inputs.order_type.value = action.value;
+        if (action.value.value === "all_orders") {
+          draft.inputs.minimum_order_total.isDependencyUsed = false;
+          draft.inputs.maximum_order_total.isDependencyUsed = false;
+          draft.inputs.order_turn.isDependencyUsed = false;
+          draft.inputs.included_products.isDependencyUsed = false;
+          draft.inputs.only_included_products.isDependencyUsed = false;
+          draft.inputs.excluded_products.isDependencyUsed = false;
+        }
+        if (action.value.value === "orders_more_than") {
+          draft.inputs.minimum_order_total.isDependencyUsed = true;
+          draft.inputs.maximum_order_total.isDependencyUsed = false;
+          draft.inputs.order_turn.isDependencyUsed = false;
+          draft.inputs.included_products.isDependencyUsed = false;
+          draft.inputs.only_included_products.isDependencyUsed = false;
+          draft.inputs.excluded_products.isDependencyUsed = false;
+        } else if (action.value.value === "orders_less_than") {
+          draft.inputs.minimum_order_total.isDependencyUsed = false;
+          draft.inputs.maximum_order_total.isDependencyUsed = true;
+          draft.inputs.order_turn.isDependencyUsed = false;
+          draft.inputs.included_products.isDependencyUsed = false;
+          draft.inputs.only_included_products.isDependencyUsed = false;
+          draft.inputs.excluded_products.isDependencyUsed = false;
+        } else if (action.value.value === "x_orders") {
+          draft.inputs.minimum_order_total.isDependencyUsed = false;
+          draft.inputs.maximum_order_total.isDependencyUsed = false;
+          draft.inputs.order_turn.isDependencyUsed = true;
+          draft.inputs.included_products.isDependencyUsed = false;
+          draft.inputs.only_included_products.isDependencyUsed = false;
+          draft.inputs.excluded_products.isDependencyUsed = false;
+        } else if (action.value.value === "include") {
+          draft.inputs.minimum_order_total.isDependencyUsed = false;
+          draft.inputs.maximum_order_total.isDependencyUsed = false;
+          draft.inputs.order_turn.isDependencyUsed = false;
+          draft.inputs.included_products.isDependencyUsed = true;
+          draft.inputs.only_included_products.isDependencyUsed = false;
+          draft.inputs.excluded_products.isDependencyUsed = false;
+        } else if (action.value.value === "not_include") {
+          draft.inputs.minimum_order_total.isDependencyUsed = false;
+          draft.inputs.maximum_order_total.isDependencyUsed = false;
+          draft.inputs.order_turn.isDependencyUsed = false;
+          draft.inputs.included_products.isDependencyUsed = false;
+          draft.inputs.only_included_products.isDependencyUsed = false;
+          draft.inputs.excluded_products.isDependencyUsed = true;
+        } else if (action.value.value === "only_include") {
+          draft.inputs.minimum_order_total.isDependencyUsed = false;
+          draft.inputs.maximum_order_total.isDependencyUsed = false;
+          draft.inputs.order_turn.isDependencyUsed = false;
+          draft.inputs.included_products.isDependencyUsed = false;
+          draft.inputs.only_included_products.isDependencyUsed = true;
+          draft.inputs.excluded_products.isDependencyUsed = false;
+        }
+        return;
+      case "minimum_order_totalChange":
+        draft.inputs.minimum_order_total.value = action.value;
+        return;
+      case "maximum_order_totalChange":
+        draft.inputs.maximum_order_total.value = action.value;
+        return;
+      case "order_turnChange":
+        draft.inputs.order_turn.value = action.value;
+        return;
+      case "fetchWoocommerceProducts":
+        draft.inputs.included_products.options = action.value;
+        draft.inputs.only_included_products.options = action.value;
+        draft.inputs.excluded_products.options = action.value;
+        return;
+      case "included_productsChange":
+        draft.inputs.included_products.value = action.value;
+        return;
+      case "only_included_productsChange":
+        draft.inputs.only_included_products.value = action.value;
+        return;
+      case "excluded_productsChange":
+        draft.inputs.excluded_products.value = action.value;
+        return;
+      case "order_statusChange":
+        draft.inputs.order_status.value = action.value;
+        return;
+      case "actionChange":
+        draft.inputs.action.value = action.value;
+        if (action.value.value === "save_customer_mobile_to_phonebook") {
+          draft.inputs.mobile_meta_key.isDependencyUsed = true;
+          draft.inputs.woo_order_phonebook.isDependencyUsed = true;
+          draft.inputs.action_time.value = "";
+          draft.inputs.action_time.isDependencyUsed = false;
+          draft.inputs.sms_pattern.isDependencyUsed = false;
+          draft.inputs.sms_message.isDependencyUsed = false;
+          draft.inputs.time.isDependencyUsed = false;
+        } else {
+          draft.inputs.mobile_meta_key.isDependencyUsed = true;
+          draft.inputs.woo_order_phonebook.isDependencyUsed = false;
+          draft.inputs.action_time.isDependencyUsed = true;
+        }
+        return;
+      case "mobile_meta_keyOptions":
+        draft.inputs.mobile_meta_key.options = action.value;
+        return;
+      case "mobile_meta_keyChange":
+        draft.inputs.mobile_meta_key.value = action.value;
+        return;
+      case "woo_order_phonebookChange":
+        draft.inputs.woo_order_phonebook.value = action.value;
+        return;
+      case "cantFetchPhonebooks":
+        draft.isFetching = false;
+        return;
+      case "phonebookOptions":
+        if (props.integratedPlugins?.woocommerce?.use) {
+          draft.inputs.woo_order_phonebook.options = action.value;
+        }
+        draft.isFetching = false;
+        return;
+      case "action_timeChange":
+        draft.inputs.action_time.value = action.value;
+        if (action.value.value === "immediately") {
+          draft.inputs.time.isDependencyUsed = false;
+          draft.inputs.sms_pattern.isDependencyUsed = true;
+          draft.inputs.sms_message.isDependencyUsed = false;
+        } else if (action.value.value === "timed") {
+          draft.inputs.time.isDependencyUsed = true;
+          draft.inputs.sms_pattern.isDependencyUsed = false;
+          draft.inputs.sms_message.isDependencyUsed = true;
+        } else {
+          draft.inputs.time.isDependencyUsed = false;
+          draft.inputs.sms_pattern.isDependencyUsed = false;
+          draft.inputs.sms_message.isDependencyUsed = false;
+        }
+        return;
+      case "timeChange":
+        draft.inputs.time.value = action.value;
+        return;
+      case "sms_patternChange":
+        draft.inputs.sms_pattern.value = action.value;
+        return;
+      case "sms_messageChange":
+        draft.inputs.sms_message.value = action.value;
+        return;
+      case "getWooOrderActions":
+        draft.wooOrderActions = action.value;
+        return;
+      case "updateCurrentWooOrderActions":
+        draft.currentWooOrderActions = action.value;
+        return;
+      case "checkActions":
+        draft.checkAction = true;
+        return;
+      case "dontCheckActions":
+        draft.checkAction = false;
+        return;
+      case "edit_action":
+        draft.editAction = true;
+        return;
+      case "edited_action_id":
+        draft.edited_action_id = action.value;
+        return;
+      case "cancel_edit_action":
+        draft.editAction = false;
+        return;
+      case "fill_form_with_edited_data":
+        draft.inputs.title.value = action.value?.title;
+        draft.inputs.order_type.value = action.value?.order_type?.type;
+        draft.inputs.minimum_order_total.value =
+          action.value?.order_type?.minimum_order_total;
+        draft.inputs.maximum_order_total.value =
+          action.value?.order_type?.maximum_order_total;
+        draft.inputs.order_turn.value = action.value?.order_type?.order_turn;
+        draft.inputs.included_products.value =
+          action.value?.order_type?.included_products;
+        draft.inputs.only_included_products.value =
+          action.value?.order_type?.only_included_products;
+        draft.inputs.excluded_products.value =
+          action.value?.order_type?.excluded_products;
+        draft.inputs.order_status.value = action.value?.order_status;
+        draft.inputs.action.value = action.value?.action?.type;
+        draft.inputs.woo_order_phonebook.value =
+          action.value?.action?.phonebook;
+        draft.inputs.mobile_meta_key.value =
+          action.value?.action?.mobile_meta_key;
+        draft.inputs.action_time.value = action.value?.action?.action_time;
+        draft.inputs.time.value = action.value?.action?.time;
+        draft.inputs.sms_pattern.value = action.value?.action?.sms_pattern;
+        draft.inputs.sms_message.value = action.value?.action?.sms_message;
+        return;
+      case "clearForm":
+        draft.inputs.title.value = "";
+        draft.inputs.order_type.value = "";
+        draft.inputs.minimum_order_total.value = "";
+        draft.inputs.maximum_order_total.value = "";
+        draft.inputs.order_turn.value = "";
+        draft.inputs.included_products.value = "";
+        draft.inputs.only_included_products.value = "";
+        draft.inputs.excluded_products.value = "";
+        draft.inputs.order_status.value = "";
+        draft.inputs.action.value = "";
+        draft.inputs.woo_order_phonebook.value = "";
+        draft.inputs.mobile_meta_key.value = "";
+        draft.inputs.action_time.value = "";
+        draft.inputs.time.value = "";
+        draft.inputs.sms_pattern.value = "";
+        draft.inputs.sms_message.value = "";
+        draft.inputs.minimum_order_total.isDependencyUsed = false;
+        draft.inputs.maximum_order_total.isDependencyUsed = false;
+        draft.inputs.order_turn.isDependencyUsed = false;
+        draft.inputs.included_products.isDependencyUsed = false;
+        draft.inputs.only_included_products.isDependencyUsed = false;
+        draft.inputs.excluded_products.isDependencyUsed = false;
+        draft.inputs.time.isDependencyUsed = false;
+        draft.inputs.mobile_meta_key.isDependencyUsed = false;
+        draft.inputs.woo_order_phonebook.isDependencyUsed = false;
+        draft.inputs.action_time.isDependencyUsed = false;
+        draft.inputs.sms_pattern.isDependencyUsed = false;
+        draft.inputs.sms_message.isDependencyUsed = false;
+        draft.inputs.time.isDependencyUsed = false;
+        return;
+      case "saveRequestStarted":
+        draft.isSaving = true;
+        return;
+      case "saveRequestFinished":
+        draft.isSaving = false;
+        return;
+    }
+  }
+
+  const [state, dispatch] = useImmerReducer(ourReduser, originalState);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    dispatch({ type: "saveRequestStarted" });
+
+    async function add_woocommerce_order_action_to_db() {
+      try {
+        const newAction = await AxiosWp.post(
+          "/wpstorm-notify/v1/add_woocommerce_order_action_to_db",
+          {
+            title: state.inputs.title.value,
+            order_type: {
+              type: state.inputs.order_type.value,
+              minimum_order_total: state.inputs.minimum_order_total.value ?? "",
+              maximum_order_total: state.inputs.maximum_order_total.value ?? "",
+              order_turn: state.inputs.order_turn.value ?? "",
+              included_products: state.inputs.included_products.value ?? "",
+              only_included_products:
+                state.inputs.only_included_products.value ?? "",
+              excluded_products: state.inputs.excluded_products.value ?? "",
+            },
+            order_status: state.inputs.order_status.value,
+            action: {
+              type: state.inputs.action.value,
+              phonebook: state.inputs.woo_order_phonebook.value ?? "",
+              mobile_meta_key: state.inputs.mobile_meta_key.value ?? "",
+              sms_pattern: state.inputs.sms_pattern.value ?? "",
+              sms_message: state.inputs.sms_message.value ?? "",
+              action_time: state.inputs.action_time.value ?? "",
+              time: state.inputs.time.value ?? "",
+            },
+          }
+        );
+        dispatch({ type: "saveRequestFinished" });
+        dispatch({ type: "clearForm" });
+        dispatch({ type: "checkActions" });
+        appDispatch({
+          type: "flashMessage",
+          value: {
+            message: __("Action added successfully.", "wpstorm-notify"),
+          },
+        });
+        console.log(newAction);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
+    add_woocommerce_order_action_to_db();
+  }
+
+  function handleEdit(e) {
+    e.preventDefault();
+    dispatch({ type: "saveRequestStarted" });
+    async function edit_woocommerce_order_action_on_db() {
+      try {
+        const updatedAction = await AxiosWp.post(
+          "/wpstorm-notify/v1/edit_woocommerce_order_action_on_db",
+          {
+            action_id: state.edited_action_id,
+            title: state.inputs.title.value,
+            order_type: {
+              type: state.inputs.order_type.value,
+              minimum_order_total: state.inputs.minimum_order_total.value ?? "",
+              maximum_order_total: state.inputs.maximum_order_total.value ?? "",
+              order_turn: state.inputs.order_turn.value ?? "",
+              included_products: state.inputs.included_products.value ?? "",
+              only_included_products:
+                state.inputs.only_included_products.value ?? "",
+              excluded_products: state.inputs.excluded_products.value ?? "",
+            },
+            order_status: state.inputs.order_status.value,
+            action: {
+              type: state.inputs.action.value,
+              phonebook: state.inputs.woo_order_phonebook.value ?? "",
+              mobile_meta_key: state.inputs.mobile_meta_key.value ?? "",
+              sms_pattern: state.inputs.sms_pattern.value ?? "",
+              sms_message: state.inputs.sms_message.value ?? "",
+              action_time: state.inputs.action_time.value ?? "",
+              time: state.inputs.time.value ?? "",
+            },
+          }
+        );
+        dispatch({ type: "saveRequestFinished" });
+        dispatch({ type: "clearForm" });
+        dispatch({ type: "checkActions" });
+        appDispatch({
+          type: "flashMessage",
+          value: {
+            message: __("Action Updated successfully.", "wpstorm-notify"),
+          },
+        });
+        console.log(updatedAction);
+        dispatch({ type: "cancel_edit_action" });
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
+    edit_woocommerce_order_action_on_db();
+  }
+
+  /**
+   * Get usermeta keys from DB rest routes
+   *
+   * @since 1.0.0
+   */
+  useEffect(() => {
+    async function getUsermeta() {
+      try {
+        const getUsermeta = await AxiosWp.get("/wpstorm-notify/v1/usermeta", {});
+        const usermetaArrayObject = Object.keys(getUsermeta.data).map(
+          (key) => ({
+            value: getUsermeta.data[key].meta_key,
+            label: getUsermeta.data[key].meta_key,
+          })
+        );
+        dispatch({
+          type: "mobile_meta_keyOptions",
+          value: usermetaArrayObject,
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
+    getUsermeta();
+  }, []);
+
+  /**
+   * Get phonebooks.
+   *
+   * @since 1.0.0
+   */
+  function handleNoPhonebooks() {
+    dispatch({ type: "cantFetchPhonebooks" });
+  }
+
+  function handleAllPhonebooks(phonebooksArrayObject) {
+    dispatch({
+      type: "phonebookOptions",
+      value: phonebooksArrayObject,
+    });
+  }
+
+  useEffect(() => {
+    async function getWoocommerceProducts() {
+      try {
+        let page = 1;
+        let allProducts = [];
+
+        while (true) {
+          const res = await AxiosWp.get(
+            `/wc/v3/products?per_page=100&page=${page}`
+          );
+          const products = res.data;
+
+          if (products.length === 0) {
+            break; // Exit the loop if no more products are returned
+          }
+          allProducts = allProducts.concat(products);
+          page++;
+        }
+
+        const productArray = allProducts.map((product) => ({
+          value: product.id,
+          label: product.name,
+        }));
+
+        console.log(productArray);
+        dispatch({ type: "fetchWoocommerceProducts", value: productArray });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    getWoocommerceProducts();
+  }, []);
+
+  /**
+   * Get WooCommerce order actions list from DB
+   */
+  useEffect(() => {
+    async function get_woocommerce_order_actions_from_db() {
+      try {
+        const res = await AxiosWp.get(
+          "/wpstorm-notify/v1/get_woocommerce_order_actions_from_db"
+        );
+        const data = JSON.parse(res.data);
+        const parsedData = data.map((obj) => {
+          return {
+            id: obj.id,
+            title: obj.title,
+            order_type: JSON.parse(obj.order_type),
+            order_status: JSON.parse(obj.order_status),
+            action: JSON.parse(obj.action),
+          };
+        });
+        if (parsedData) {
+          console.log(parsedData);
+          dispatch({
+            type: "getWooOrderActions",
+            value: parsedData,
+          });
+          dispatch({
+            type: "updateCurrentWooOrderActions",
+            value: parsedData,
+          });
+          dispatch({ type: "dontCheckActions" });
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+
+    get_woocommerce_order_actions_from_db();
+  }, [state.checkAction]);
+
+  const handleSyncActions = async () => {
+    try {
+      dispatch({ type: "checkActions" });
+      appDispatch({
+        type: "flashMessage",
+        value: {
+          message: __("Congrats. Actions synced successfully.", "wpstorm-notify"),
+        },
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  /**
+   * Delete WooCommerce order action from DB.
+   */
+  const { confirm } = useConfirm();
+  const deleteAction = async (action) => {
+    const isConfirmed = await confirm(
+      __("Do you want to delete that action?", "wpstorm-notify")
+    );
+
+    if (isConfirmed) {
+      async function deleteActionFromDb() {
+        try {
+          await AxiosWp.post(
+            "/wpstorm-notify/v1/delete_woocommerce_order_action_from_db",
+            {
+              action_id: action.id,
+            }
+          );
+          appDispatch({
+            type: "flashMessage",
+            value: {
+              message: __(
+                "Congrats. Action deleted successfully.",
+                "wpstorm-notify"
+              ),
+            },
+          });
+          dispatch({ type: "checkActions" });
+        } catch (e) {
+          console.log(e);
+        }
+      }
+
+      deleteActionFromDb();
+    } else {
+      appDispatch({
+        type: "flashMessage",
+        value: {
+          message: __("Canceled. Action still there.", "wpstorm-notify"),
+          type: "error",
+        },
+      });
+    }
+  };
+
+  const deleteActions = async (actions_ids) => {
+    try {
+      const res = await AxiosWp.post(
+        "/wpstorm-notify/v1/delete_woocommerce_order_actions_from_db",
+        {
+          actions_ids: actions_ids,
+        }
+      );
+      console.log(res);
+      dispatch({ type: "checkActions" });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const editAction = async (action_id) => {
+    dispatch({ type: "edited_action_id", value: action_id });
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+    try {
+      const res = await AxiosWp.post(
+        "/wpstorm-notify/v1/get_woocommerce_order_action_from_db_to_edit",
+        {
+          action_id: action_id,
+        }
+      );
+
+      const data = res.data;
+      // Parse nested objects
+      data.order_type = JSON.parse(data.order_type);
+      data.order_status = JSON.parse(data.order_status);
+
+      data.action = JSON.parse(data.action);
+      dispatch({ type: "order_typeChange", value: data.order_type.type });
+      dispatch({ type: "actionChange", value: data.action.type });
+      dispatch({ type: "action_timeChange", value: data.action.action_time });
+      dispatch({ type: "fill_form_with_edited_data", value: data });
+      dispatch({ type: "edit_action" });
+      appDispatch({
+        type: "flashMessage",
+        value: {
+          message: __("You now can edit your action.", "wpstorm-notify"),
+          type: "warning",
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSelectAction = (action_id) => {
+    if (selectedActions.includes(action_id)) {
+      setSelectedActions(selectedActions.filter((s) => s !== action_id));
+    } else {
+      setSelectedActions((prev) => [...prev, action_id]);
+    }
+  };
+
+  const handleDeleteSelectedActions = async () => {
+    const isConfirmed = await confirm(
+      __("Do you want to delete the selected actions?", "wpstorm-notify")
+    );
+
+    if (isConfirmed) {
+      await deleteActions(selectedActions);
+      setSelectedActions([]);
+      appDispatch({
+        type: "flashMessage",
+        value: {
+          message: __("Selected Actions deleted successfully.", "wpstorm-notify"),
+        },
+      });
+    } else {
+      appDispatch({
+        type: "flashMessage",
+        value: {
+          message: __("Canceled. Actions still there.", "wpstorm-notify"),
+          type: "error",
+        },
+      });
+    }
+  };
+
+  const handelCancel = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+    dispatch({ type: "clearForm" });
+    dispatch({ type: "cancel_edit_action" });
+    appDispatch({
+      type: "flashMessage",
+      value: {
+        message: __("The form was reset.", "wpstorm-notify"),
+        type: "warning",
+      },
+    });
+  };
+
+  if (state.isFetching) return <LoadingSpinner />;
+
+  if (props.integratedPlugins?.woocommerce?.use) {
+    return (
+      <>
+        <SectionHeader sectionName={state.sectionName} />
+        <div>
+          <div className="container"></div>
+          <SettingsForm
+            dispatchAllPhonebooks={handleAllPhonebooks}
+            dispatchNoPhonebooks={handleNoPhonebooks}
+            sectionName={state.sectionName}
+            inputs={state.inputs}
+            handleSubmit={state.editAction ? handleEdit : handleSubmit}
+            dispatch={dispatch}
+            isSaving={state.isSaving}
+            buttonText={
+              state.editAction
+                ? __("Edit Action", "wpstorm-notify")
+                : __("Add Action", "wpstorm-notify")
+            }
+            cancelButtonText={__("Cancel", "wpstorm-notify")}
+            handelCancel={handelCancel}
+          />
+        </div>
+        {state.wooOrderActions && (
+          <div className="list-contacts">
+            <table className="contact-list">
+              <thead>
+                <tr>
+                  <th>{__("Select", "wpstorm-notify")}</th>
+                  <th>{__("Title", "wpstorm-notify")}</th>
+                  <th>{__("On Order status", "wpstorm-notify")}</th>
+                  <th>{__("Action type", "wpstorm-notify")}</th>
+                  <th>{__("Delete", "wpstorm-notify")}</th>
+                  <th>{__("Edit", "wpstorm-notify")}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {state?.wooOrderActions.map((action, index) => (
+                  <tr key={action.id}>
+                    <td>
+                      <input
+                        type="checkbox"
+                        checked={selectedActions.includes(action.id)}
+                        onChange={() => handleSelectAction(action.id)}
+                      />
+                    </td>
+                    <td>{action.title}</td>
+                    <td>{action.order_status.label}</td>
+                    <td>{action.action.type.label}</td>
+                    <td>
+                      <button
+                        className="contact-delete"
+                        onClick={() => deleteAction(action)}
+                      >
+                        {__("Delete", "wpstorm-notify")}
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        className="contact-edit"
+                        onClick={() => editAction(action.id)}
+                      >
+                        {__("Edit", "wpstorm-notify")}
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <div className="contact-list-actions">
+              <button
+                className="contact-delete"
+                onClick={handleDeleteSelectedActions}
+                disabled={isDeleteDisabled}
+              >
+                {__("Delete Selected Actions", "wpstorm-notify")}
+              </button>
+              <button className="contact-sync" onClick={handleSyncActions}>
+                {__("Sync Actions", "wpstorm-notify")}
+              </button>
+            </div>
+          </div>
+        )}
+      </>
+    );
+  } else {
+    return <SectionError sectionName={state.sectionName} />;
+  }
+}
+
+export default WooOrderActions;
