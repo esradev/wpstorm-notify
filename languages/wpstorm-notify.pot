@@ -1,0 +1,589 @@
+# Copyright (C) 2023 Wpstorm Genius
+# This file is distributed under the GPL v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Wpstorm Notify 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wpstorm-notify\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2023-07-11T06:02:07+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.7.1\n"
+"X-Domain: wpstorm-notify\n"
+
+#. Plugin Name of the plugin
+msgid "Wpstorm Notify"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://wpstorm.ir/wpstorm-notify/"
+msgstr ""
+
+#. Description of the plugin
+msgid "Just send sms and email."
+msgstr ""
+
+#. Author of the plugin
+msgid "Wpstorm Genius"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://wpstorm.ir/about/"
+msgstr ""
+
+#: classes/wpstorm-notify-settings.php:159
+#: classes/wpstorm-notify-settings.php:160
+#: classes/wpstorm-notify-settings.php:172
+#: classes/wpstorm-notify-settings.php:215
+#: classes/wpstorm-notify-settings.php:245
+msgid "wpstorm-notify"
+msgstr ""
+
+#: classes/wpstorm-notify-settings.php:173
+#: classes/wpstorm-notify-settings.php:260
+msgid "Settings"
+msgstr ""
+
+#: classes/wpstorm-notify-settings.php:228
+msgid "Account credit: "
+msgstr ""
+
+#: classes/wpstorm-notify-settings.php:228
+msgid " $IR_T"
+msgstr ""
+
+#: classes/wpstorm-notify-settings.php:237
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:237
+msgid "Send Sms"
+msgstr ""
+
+#: classes/wpstorm-notify-settings.php:263
+msgid "Docs"
+msgstr ""
+
+#: classes/wpstorm-notify-settings.php:279
+msgid "wpstorm-notify latest news"
+msgstr ""
+
+#: classes/wpstorm-notify-settings.php:338
+msgid "Dear user, your panel will expire less than a month from now. To renew your SMS panel, contact wpstorm-notify"
+msgstr ""
+
+#: classes/wpstorm-notify-settings.php:347
+msgid "Dear user, your panel will expire less than a week from now. To renew your SMS panel, contact wpstorm-notify."
+msgstr ""
+
+#: modules/aff/wpstorm-notify-aff.php:279
+#: modules/aff/wpstorm-notify-aff.php:280
+#: modules/aff/wpstorm-notify-aff.php:295
+#: modules/aff/wpstorm-notify-aff.php:298
+#: modules/aff/wpstorm-notify-aff.php:317
+#: modules/aff/wpstorm-notify-aff.php:320
+#: modules/aff/wpstorm-notify-aff.php:433
+#: modules/aff/wpstorm-notify-aff.php:454
+#: modules/edd/wpstorm-notify-edd.php:192
+#: modules/edd/wpstorm-notify-edd.php:196
+#: modules/newsletter/wpstorm-notify-newsletter.php:96
+msgid "Phone number"
+msgstr ""
+
+#: modules/aff/wpstorm-notify-aff.php:434
+#: modules/aff/wpstorm-notify-aff.php:455
+msgid "Enter your phone number"
+msgstr ""
+
+#: modules/core/wpstorm-notify-comments.php:85
+#: modules/core/wpstorm-notify-comments.php:127
+msgid "Mobile"
+msgstr ""
+
+#: modules/core/wpstorm-notify-comments.php:132
+msgid "Like: 09*********"
+msgstr ""
+
+#: modules/core/wpstorm-notify-comments.php:157
+msgid "Error: Mobile number is required."
+msgstr ""
+
+#: modules/edd/wpstorm-notify-edd.php:79
+msgid "Phone number: "
+msgstr ""
+
+#: modules/edd/wpstorm-notify-edd.php:194
+msgid "We use this to send order information."
+msgstr ""
+
+#: modules/edd/wpstorm-notify-edd.php:208
+msgid "Enter a valid phone number."
+msgstr ""
+
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:48
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:67
+msgid "Wpstorm Notify Newsletter"
+msgstr ""
+
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:75
+msgid "Sender number"
+msgstr ""
+
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:82
+msgid "Send sms to the visitor"
+msgstr ""
+
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:84
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:152
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:190
+msgid "Enable"
+msgstr ""
+
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:85
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:153
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:191
+msgid "Disable"
+msgstr ""
+
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:88
+msgid "After completing the form and pressing the send button, an SMS will be sent to the visitor."
+msgstr ""
+
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:95
+msgid "SMS recipient number (field shortcode)"
+msgstr ""
+
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:100
+msgid "Example: [field id=\"mobile\"]"
+msgstr ""
+
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:105
+msgid "Find the field id in each of form fields in the advanced tab."
+msgstr ""
+
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:113
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:202
+msgid "How to send?"
+msgstr ""
+
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:120
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:209
+msgid "Web Service"
+msgstr ""
+
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:121
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:210
+msgid "Pattern"
+msgstr ""
+
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:122
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:211
+msgid "None"
+msgstr ""
+
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:127
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:216
+msgid "Pattern code"
+msgstr ""
+
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:129
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:218
+msgid "Enter your pattern code"
+msgstr ""
+
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:138
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:227
+msgid "Sms content"
+msgstr ""
+
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:141
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:230
+msgid "Enter SMS text or pattern variables"
+msgstr ""
+
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:145
+msgid "If you choose the web service sending method, enter the text of your SMS. If you use a pattern, enter a variable along with its value with: in each line. The value can be a constant or a shortcode of the fields. For example<br> PersonName:[field id='name'] companyName:wpstorm-notify'"
+msgstr ""
+
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:150
+msgid "Save in the system phonebook"
+msgstr ""
+
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:159
+msgid "The number entered by the visitor in the form will be saved in the phonebook of wpstorm-notify system."
+msgstr ""
+
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:188
+msgid "Send sms to the admin"
+msgstr ""
+
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:194
+msgid "If you want an SMS alert to be sent to the admin number as soon as the visitor completes the form, check this option."
+msgstr ""
+
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:234
+msgid "By completing the form, an SMS will be sent to the admin. The administrator number must be defined in the plugin settings."
+msgstr ""
+
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:240
+msgid "Send sms copy to others"
+msgstr ""
+
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:242
+msgid "Example: 09121234567,09351234567"
+msgstr ""
+
+#: modules/elementor/form-actions/wpstorm-notify-newsletter-action-after-submit.php:247
+msgid "A copy of this SMS will be sent to these numbers, while sending to the administrator. (Separate with english commas.)"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:38
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:111
+msgid "wpstorm-notify Newsletter"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:129
+msgid "Phonebook"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:139
+msgid "Send Verify Code?"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:141
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:161
+msgid "Yes"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:142
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:162
+msgid "No"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:151
+msgid "Verify Code Pattern"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:159
+msgid "Send Welcome Message?"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:171
+msgid "Welcome Message Pattern"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:181
+msgid "wpstorm-notify Newsletter Form"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:189
+msgid "Form Title"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:197
+msgid "Name Field Placeholder"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:199
+msgid "Like: Ghafary"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:206
+msgid "Phone Field Placeholder"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:208
+msgid "Like: 09300410381"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:215
+msgid "Form Background Color"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:227
+msgid "Form Border Radius"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:246
+msgid "Form Alignment"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:250
+msgid "Left"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:254
+msgid "Center"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:258
+msgid "Right"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:272
+msgid "Form Margin"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:290
+msgid "Form Padding"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:309
+msgid "Input Width"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:339
+msgid "Input Margin"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:357
+msgid "Input Padding"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:375
+msgid "Input Text Direction"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:378
+msgid "Right to Left"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:379
+msgid "Left to Right"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:391
+msgid "Text Border Radius"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:410
+msgid "Text Background Color"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:422
+msgid "Text Font Size"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:448
+msgid "Text Color"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:464
+msgid "Submit Button"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:473
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:540
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:607
+msgid "Button Text"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:475
+msgid "Submit"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:482
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:549
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:616
+msgid "Button Background Color"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:494
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:561
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:628
+msgid "Button Text Color"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:506
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:572
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:639
+msgid "Margin"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:518
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:584
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:651
+msgid "Padding"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:532
+msgid "Submit Code Button"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:542
+msgid "Submit Code"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:599
+msgid "Resent Code Button"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:609
+msgid "Resent Code"
+msgstr ""
+
+#: modules/elementor/widgets/wpstorm-notify-newsletter-widget.php:684
+#: modules/newsletter/wpstorm-notify-newsletter.php:99
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:516
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:526
+msgid "Verification code"
+msgstr ""
+
+#: modules/newsletter/wpstorm-notify-newsletter.php:93
+msgid "First & Last name"
+msgstr ""
+
+#: modules/newsletter/wpstorm-notify-newsletter.php:106
+msgid "Join"
+msgstr ""
+
+#: modules/newsletter/wpstorm-notify-newsletter.php:109
+msgid "Send code"
+msgstr ""
+
+#: modules/newsletter/wpstorm-notify-newsletter.php:110
+msgid "Send code again"
+msgstr ""
+
+#: modules/woocommerce/order-review/wpstorm-notify-order-review-page.php:16
+msgid "Invalid order ID"
+msgstr ""
+
+#: modules/woocommerce/order-review/wpstorm-notify-order-review-page.php:20
+msgid "No order ID provided"
+msgstr ""
+
+#: modules/woocommerce/order-review/wpstorm-notify-order-review-page.php:31
+msgid "Product name: "
+msgstr ""
+
+#: modules/woocommerce/order-review/wpstorm-notify-order-review-page.php:39
+msgid "Rating"
+msgstr ""
+
+#: modules/woocommerce/order-review/wpstorm-notify-order-review-page.php:41
+msgid "Select a rating"
+msgstr ""
+
+#: modules/woocommerce/order-review/wpstorm-notify-order-review-page.php:48
+msgid "Review"
+msgstr ""
+
+#: modules/woocommerce/order-review/wpstorm-notify-order-review-page.php:52
+msgid "Submit Review"
+msgstr ""
+
+#: modules/woocommerce/order-review/wpstorm-notify-order-review.php:121
+msgid "Order Review"
+msgstr ""
+
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:125
+msgid "No tracking code data found for this order."
+msgstr ""
+
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:132
+msgid "Multiple tracking codes found for this order:"
+msgstr ""
+
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:138
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:150
+msgid "Tracking Code: "
+msgstr ""
+
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:139
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:153
+msgid "Post Service Provider: "
+msgstr ""
+
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:140
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:156
+msgid "Post Date: "
+msgstr ""
+
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:144
+msgid "One tracking code found for this order:"
+msgstr ""
+
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:172
+msgid "Already sent tracking code"
+msgstr ""
+
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:190
+msgid "Send tracking code"
+msgstr ""
+
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:212
+msgid "Tracking Code"
+msgstr ""
+
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:213
+msgid "Enter tracking code"
+msgstr ""
+
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:217
+msgid "Service Provider"
+msgstr ""
+
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:221
+msgid "Post Office"
+msgstr ""
+
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:222
+msgid "Tipaxco"
+msgstr ""
+
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:225
+msgid "Custom Provider"
+msgstr ""
+
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:232
+msgid "Date of Posting"
+msgstr ""
+
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:274
+msgid "Please enter the tracking code."
+msgstr ""
+
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:278
+msgid "Please select a service provider."
+msgstr ""
+
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:282
+msgid "Please select the date of posting."
+msgstr ""
+
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:288
+msgid "Customer phone number not entered."
+msgstr ""
+
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:354
+msgid "Pattern not entered to send tracking code"
+msgstr ""
+
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:361
+msgid "Probably your pattern has not been approved"
+msgstr ""
+
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:536
+msgid "Send"
+msgstr ""
+
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:559
+msgid "Please confirm your phone number first"
+msgstr ""
+
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:564
+msgid "The verification code entered is not valid"
+msgstr ""
+
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:576
+msgid "Please enter phone number."
+msgstr ""
+
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:585
+msgid "An error occurred"
+msgstr ""
+
+#: modules/woocommerce/wpstorm-notify-woocommerce.php:587
+msgid "Verification code sent successfully"
+msgstr ""
