@@ -2,14 +2,14 @@
  * Import remote dependencies.
  */
 import React from "react";
-import { NavLink } from "react-router-dom";
+import {NavLink} from "react-router-dom";
 
 /**
  * Import local dependencies
  */
 import SidebarItems from "./SidebarItems";
 
-function Sidebar({ children }) {
+function Sidebar({children}) {
     return (
         <div className="wpstorm-notify-sidebar">
             <div style={{ width: "250px" }} className="sidebar">
